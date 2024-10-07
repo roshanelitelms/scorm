@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player</title>
+    <script src="scorm.js"></script> 
+</head>
+<body>
+        <iframe id="scormContent" width="100%" height="600px" src="#"></iframe> 
+</body>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessKey = urlParams.get('accessKey');
+    const token = urlParams.get('token');
+
+    // Data to be sent to the API
+    var dataToSend = {
+        accessKey: accessKey
+    };
+
+    // Make the POST request using fetch with Bearer token in header
+    fetch('http://localhost:8000/api/getPlayerDetails', {
+        method: 'POST', // HTTP method
+        headers: {
+            'Content-Type': 'application/json', // Set content type to JSON
+            'Authorization': 'Bearer '+token // Add Bearer token to headers
+        },
+        body: JSON.stringify(dataToSend) // Convert data to JSON string
+    })
+    .then(response => response.json()) // Parse the JSON from the response
+    .then(data => {
+        if (data.status == 1 && data.code == 200) {
+            // Update the src of the iframe with the media URL from the API response
+            document.getElementById('scormContent').src = data.data.mediaUrl;
+        } else {
+            console.error('Invalid response data.');
+        }
+    })
+    .catch(error => {
+        //console.error('Error occurred:', error);
+        // Handle error response
+    });
+});
+</script>
+
+</html>
+
+
+
+
+
+
+
