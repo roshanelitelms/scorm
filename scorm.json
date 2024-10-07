@@ -1,0 +1,9 @@
+{
+    "status": true,
+    "code": 200,
+    "message": "Player details.",
+    "data": {
+        "mediaUrl": "https://develitelmsbucket.s3.amazonaws.com/elitelms/media/2_20240926_101628/index_lms.html",
+        "launch": "index_lms.html"
+    }
+}
